@@ -6,28 +6,23 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:05:59 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/10 11:00:13 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/14 18:13:41 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-void	push(t_stack *dest, int value)
+int		valid_option(t_option *options)
 {
-	dest->stack[dest->position] = value;
-	dest->position++;
-}
-
-int		pop(t_stack *stack)
-{
-	int		value;
-
-	if (stack->position >= 0)
-	{
-		value = stack->stack[stack->position - 1];
-		stack->position--;
-	}
-	return (value);
+	if (options->display_status > 1)
+		return (1);
+	if (options->color_last_option > 1)
+		return (1);
+	if (options->read > 1)
+		return (1);
+	if (options->write > 1)
+		return (1);
+	return (0);
 }
 
 int		is_all_num(char *str)
@@ -37,38 +32,75 @@ int		is_all_num(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (!(str[i] >= '0' && str[i] <= '9'))
+		if (i == 0 && str[0] == '-')
+			;
+		else if (!(str[i] >= '0' && str[i] <= '9'))
 			return (1);
 		i++;
 	}
 	return (0);
 }
 
-int		fill_stack(t_stack *dest, char **tmp, char **argv)
+int		check_and_push(t_stack *stack, char **tab, int i)
 {
-	int		i;
+	while (tab[i] != NULL)
+	{
+		if (is_all_num(tab[i]) == 1)
+			return (1);
+		push(stack, ft_atoi(tab[i]));
+		i++;
+	}
+	return (0);
+}
 
+int		check_options(t_option *options, char **tab, int i)
+{
+	while (tab[i] != NULL)
+	{
+		if (ft_strcmp(tab[i], "-v") == 0)
+			options->display_status++;
+		else if (ft_strcmp(tab[i], "-c") == 0)
+			options->color_last_option++;
+		else if (ft_strcmp(tab[i], "-r") == 0)
+		{
+			options->read++;
+			i++;
+			options->read_file = tab[i];
+		}
+		else if (ft_strcmp(tab[i], "-w") == 0)
+		{
+			options->write++;
+			i++;
+			options->write_file = tab[i];
+		}
+		else
+			break ;
+		i++;
+	}
+	return (i);
+}
+
+int		fill_stack(t_stack *dest, char **tmp, char **argv, t_option *options)
+{
+	int  i;
+	
 	if (tmp != NULL)
 	{
-		i = 0;
-		while (tmp[i] != NULL)
-		{
-			if (is_all_num(tmp[i]) == 1)
-				return (1);
-			push(dest, ft_atoi(tmp[i]));
-			i++;
-		}
+		i = check_options(options, tmp, 0);
+		if (check_double_val(tmp) == 1)
+			return (1);
+		if (check_and_push(dest, tmp, i) == 1)
+			return (1);
 	}
 	else
 	{
-		i = 1;
-		while (argv[i] != NULL)
-		{
-			if (is_all_num(argv[i]) == 1)
-				return (1);
-			push(dest, ft_atoi(argv[i]));
-			i++;
-		}
+		i = check_options(options, argv, 1);
+		if (check_double_val(argv) == 1)
+			return (1);
+		if (check_and_push(dest, argv, i) == 1)
+			return (1);
 	}
+	if (valid_option(options) == 1)
+		return (1);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:26:10 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/10 11:55:54 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/13 16:41:36 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	swap_stack(t_stack *stack)
 {
-	int		tmp;
+	int		a;
+	int		b;
 
 	if (stack->position > 1)
 	{
-		tmp = stack->stack[stack->position - 1];
-		stack->stack[stack->position - 1] = stack->stack[stack->position - 2];
-		stack->stack[stack->position - 2] = tmp;
+		a = pop(stack);
+		b = pop(stack);
+		push(stack, a);
+		push(stack, b);
 	}
 }
 

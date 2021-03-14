@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 15:21:40 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/11 18:53:38 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/14 18:08:12 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,36 +41,60 @@ int		check_instruction(char *instruction, t_stack *a, t_stack *b)
 	return (0);
 }
 
-int		execute_instructions(t_stack *a, t_stack *b, char **instructions)
+int		execute_instructions(t_stack *a, t_stack *b, char **instructions, t_option *options)
 {
 	int		i;
 
 	i = 0;
+	if (options->display_status == 1)
+	{
+		ft_putendl_fd("--- a ---", 1);
+		print_stack(a, 1);
+		ft_putendl_fd("--- b ---", 1);
+		print_stack(b, 1);
+		ft_putendl_fd("---------", 1);
+	}
 	while (instructions[i] != NULL)
 	{
 		if (check_instruction(instructions[i], a, b) == 1)
 			return (1);
+		if (options->display_status == 1)
+		{
+			if (options->color_last_option == 1 && instructions[i + 1] == NULL)
+				ft_putstr_fd("\e[1;32m", 1);
+			display_status(a, b, instructions[i], 1);
+			if (options->color_last_option == 1 && instructions[i + 1] == NULL)
+				ft_putstr_fd("\033[0;37m", 1);
+		}
 		i++;
 	}
 	return (0);
 }
 
-int		get_instructions(t_stack *a, t_stack *b)
+int		get_instructions(t_stack *a, t_stack *b, t_option *options)
 {
 	char	**instructions;
 	char	*line;
+	int		fd;
+	int		ret;
 
 	instructions = malloc(sizeof(char *) * 1);
 	instructions[0] = NULL;
-	while (get_next_line(0, &line))
+	fd = 0;
+	if (options->read == 1)
 	{
-		if (ft_strcmp(line, "") == 0)
-			break ;
+		if ((fd = open(options->read_file, O_RDONLY, 0666)) < 0)
+			return (1);
+	}
+	while (1)
+	{
+		ret = get_next_line(fd, &line);
 		instructions = tab_join(instructions, line);
 		free(line);
+		if (ret == 0)
+			break ;
 	}
-	free(line);
-	if (execute_instructions(a, b, instructions) == 1)
+	if (execute_instructions(a, b, instructions, options) == 1)
 	{
 		free_table(instructions);
 		return (1);
@@ -81,58 +105,29 @@ int		get_instructions(t_stack *a, t_stack *b)
 
 int		main(int argc, char **argv)
 {
-	t_stack	a;
-	t_stack	b;
-	char	**tmp;
+	t_stack		a;
+	t_stack		b;
+	t_option	options;
+	char		**tmp;
 
 	if (argc >= 2)
 	{
+		init_option(&options);
 		tmp = init_value(&a, &b, argv, argc);
-		if (fill_stack(&b, tmp, argv) == 1)
+		if (fill_stack(&b, tmp, argv, &options) == 1)
 			ft_putendl_fd("Error", 2);
 		else
 		{
 			while (b.position - 1 >= 0)
 				push(&a, pop(&b));
-			if (check_double_val(&a) == 1)
+			if (get_instructions(&a, &b, &options) == 1)
 				ft_putendl_fd("Error", 2);
 			else
 			{
-				// int i = a.position - 1;
-				// while (i >= 0)
-				// {
-				// 	printf("%d\n", a.stack[i]);
-				// 	i--;
-				// }
-				// printf("==========\n");
-				// i = b.position - 1;
-				// while (i >= 0)
-				// {
-				// 	printf("%d\n", b.stack[i]);
-				// 	i--;
-				// }
-				if (get_instructions(&a, &b) == 1)
-					ft_putendl_fd("Error", 2);
+				if (is_sorted(&a) == 0 && b.position == 0)
+					ft_putendl_fd("OK", 1);
 				else
-				{
-					if (is_sorted(&a) == 0 && b.position == 0)
-						ft_putendl_fd("OK", 1);
-					else
-						ft_putendl_fd("KO", 1);
-				}
-				// int i = a.position - 1;
-				// while (i >= 0)
-				// {
-				// 	printf("%d\n", a.stack[i]);
-				// 	i--;
-				// }
-				// printf("==========\n");
-				// i = b.position - 1;
-				// while (i >= 0)
-				// {
-				// 	printf("%d\n", b.stack[i]);
-				// 	i--;
-				// }
+					ft_putendl_fd("KO", 1);
 			}
 		}
 		free(a.stack);

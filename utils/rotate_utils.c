@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:35:05 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/07 18:03:26 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/13 16:50:04 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,26 @@
 
 void	rotate_stack(t_stack *stack)
 {
-	int		tmp;
+	int		*tmp;
 	int		i;
+	int		len;
 
-	i = stack->position - 1;
-	while (i >= 0)
+	i = 0;
+	len = stack->position;
+	tmp = malloc(sizeof(int) * len);
+	while (stack->position != 0)
 	{
-		if (i == stack->position - 1)
-			tmp = stack->stack[i];
-		else
-			stack->stack[i + 1] = stack->stack[i];
+		tmp[i] = pop(stack);
+		i++;
+	}
+	push(stack, tmp[0]);
+	i = len - 1;
+	while (i > 0)
+	{
+		push(stack, tmp[i]);
 		i--;
 	}
-	stack->stack[i + 1] = tmp;
+	free(tmp);
 }
 
 void	rotate_both(t_stack *a, t_stack *b)
@@ -37,19 +44,26 @@ void	rotate_both(t_stack *a, t_stack *b)
 
 void	reverse_rotate_stack(t_stack *stack)
 {
-	int		tmp;
+	int		*tmp;
 	int		i;
+	int		len;
 
 	i = 0;
-	while (i < stack->position)
+	len = stack->position;
+	tmp = malloc(sizeof(int) * len);
+	while (stack->position != 0)
 	{
-		if (i == 0)
-			tmp = stack->stack[i];
-		else
-			stack->stack[i - 1] = stack->stack[i];
+		tmp[i] = pop(stack);
 		i++;
 	}
-	stack->stack[i - 1] = tmp;
+	i = len - 2;
+	while (i >= 0)
+	{
+		push(stack, tmp[i]);
+		i--;
+	}
+	push(stack, tmp[len - 1]);
+	free(tmp);
 }
 
 void	reverse_rotate_both(t_stack *a, t_stack *b)
