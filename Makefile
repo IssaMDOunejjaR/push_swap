@@ -6,7 +6,7 @@
 #    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/05 14:53:41 by iounejja          #+#    #+#              #
-#    Updated: 2021/03/15 14:21:08 by iounejja         ###   ########.fr        #
+#    Updated: 2021/03/15 14:27:06 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,15 +38,15 @@ all: $(EXEC_CHECKER) $(EXEC_PUSH_SWAP)
 $(EXEC_CHECKER): $(UTILS_OBJ) $(CHECKER_OBJ)
 				cd libft && $(MAKE) bonus
 				ar rcs $(LIB_CHECKER) $(CHECKER_OBJ) $(UTILS_OBJ) libft/*.o
-				$(CC) $(INCLUDES) $(LIB_CHECKER) -o $(EXEC_CHECKER)
+				$(CC) $(FLAGS) $(INCLUDES) $(LIB_CHECKER) -o $(EXEC_CHECKER)
 
 $(EXEC_PUSH_SWAP): $(UTILS_OBJ) $(PUSH_SWAP_OBJ)
 				cd libft && $(MAKE) bonus
 				ar rcs $(LIB_PUSH_SWAP) $(PUSH_SWAP_OBJ) $(UTILS_OBJ) libft/*.o
-				$(CC) $(INCLUDES) $(LIB_PUSH_SWAP) -o $(EXEC_PUSH_SWAP)
+				$(CC) $(FLAGS) $(INCLUDES) $(LIB_PUSH_SWAP) -o $(EXEC_PUSH_SWAP)
 
 %.o: %.c includes/*.h libft/libft.h
-	$(CC) $(INCLUDES) -c $< -o $@
+	$(CC) $(FLAGS) $(INCLUDES) -c $< -o $@
 
 clean:
 	rm -rf *.o

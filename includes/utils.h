@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 15:31:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 14:23:28 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/15 18:17:36 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,11 @@
 typedef struct	s_option
 {
 	int			display_status;
-	int			color_last_option;
+	int			color;
 	int			read;
 	int			write;
 	char		*read_file;
-	char		*write_file;
+	char		*write_f;
 }				t_option;
 
 typedef struct	s_stack

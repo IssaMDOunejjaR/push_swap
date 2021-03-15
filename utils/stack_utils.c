@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:05:59 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/14 18:17:22 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/15 18:17:43 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int		valid_option(t_option *options)
 {
 	if (options->display_status > 1)
 		return (1);
-	if (options->color_last_option > 1)
+	if (options->color > 1)
 		return (1);
 	if (options->read > 1)
 		return (1);
@@ -60,7 +60,7 @@ int		check_options(t_option *options, char **tab, int i)
 		if (ft_strcmp(tab[i], "-v") == 0)
 			options->display_status++;
 		else if (ft_strcmp(tab[i], "-c") == 0)
-			options->color_last_option++;
+			options->color++;
 		else if (ft_strcmp(tab[i], "-r") == 0)
 		{
 			options->read++;
@@ -71,7 +71,7 @@ int		check_options(t_option *options, char **tab, int i)
 		{
 			options->write++;
 			i++;
-			options->write_file = tab[i];
+			options->write_f = tab[i];
 		}
 		else
 			break ;

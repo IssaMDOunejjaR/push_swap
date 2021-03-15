@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 18:18:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 12:35:33 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/15 18:17:49 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,25 @@ int		check_instruction(char *instruction, t_stack *a, t_stack *b)
 	return (0);
 }
 
+int		display_checker_status(t_stack *a, t_stack *b, t_option *opt)
+{
+	int		fd;
+
+	fd = 1;
+	if (opt->write == 1)
+		fd = open(opt->write_f, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+	if (opt->display_status == 1)
+		print_start_status(a, b, fd);
+	return (fd);
+}
+
 int		execute_instructions(t_stack *a, t_stack *b, char **in, t_option *opt)
 {
 	int		i;
+	int		fd;
 
 	i = 0;
-	if (opt->display_status == 1)
-		print_start_status(a, b, 1);
+	fd = display_checker_status(a, b, opt);
 	while (in[i] != NULL)
 	{
 		if (check_instruction(in[i], a, b) == 1)
@@ -57,15 +69,16 @@ int		execute_instructions(t_stack *a, t_stack *b, char **in, t_option *opt)
 		}
 		if (opt->display_status == 1)
 		{
-			if (opt->color_last_option == 1 && in[i + 1] == NULL)
-				ft_putstr_fd("\e[1;32m", 1);
-			display_status(a, b, in[i], 1);
-			if (opt->color_last_option == 1 && in[i + 1] == NULL)
-				ft_putstr_fd("\033[0;37m", 1);
+			if (opt->color == 1 && in[i + 1] == NULL && opt->color == 0)
+				ft_putstr_fd("\e[1;32m", fd);
+			display_status(a, b, in[i], fd);
+			if (opt->color == 1 && in[i + 1] == NULL && opt->color == 0)
+				ft_putstr_fd("\033[0;37m", fd);
+			if (in[i + 1] != NULL)
+				ft_putstr_fd("\n\n", fd);
 		}
 		i++;
 	}
-	free_table(in);
 	return (0);
 }
 
@@ -74,7 +87,6 @@ int		get_instructions(t_stack *a, t_stack *b, t_option *options)
 	char	**instructions;
 	char	*line;
 	int		fd;
-	int		ret;
 
 	instructions = malloc(sizeof(char *) * 1);
 	instructions[0] = NULL;
@@ -92,6 +104,7 @@ int		get_instructions(t_stack *a, t_stack *b, t_option *options)
 	free(line);
 	if (execute_instructions(a, b, instructions, options) == 1)
 		return (1);
+	free_table(instructions);
 	return (0);
 }
 
@@ -108,28 +121,18 @@ void	print_instructions(t_stack *a, t_stack *b, t_option *options, int fd)
 	{
 		ft_putendl_fd(tmp->content, fd);
 		if (options->display_status == 1)
+		{
 			display_status(a, b, NULL, fd);
+			ft_putstr_fd("\n\n", fd);
+		}
 		tmp = tmp->next;
 	}
-	if (options->color_last_option == 1 && options->write == 0)
+	if (options->color == 1 && options->write == 0)
 		ft_putstr_fd("\e[1;32m", fd);
 	ft_putendl_fd(tmp->content, fd);
 	if (options->display_status == 1)
 		display_status(a, b, NULL, fd);
-	if (options->color_last_option == 1 && options->write == 0)
+	if (options->color == 1 && options->write == 0)
 		ft_putstr_fd("\033[0;37m", fd);
 	free_instructions(instructions);
-}
-
-void	free_instructions(t_list *instructions)
-{
-	t_list *tmp;
-
-	while (instructions != NULL)
-	{
-		free(instructions->content);
-		tmp = instructions;
-		instructions = instructions->next;
-		free(tmp);
-	}
 }

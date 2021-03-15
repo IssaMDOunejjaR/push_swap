@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 14:20:45 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 14:21:59 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/15 17:10:27 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ int		is_smallest_number(t_stack *stack, int number)
 	{
 		if (tmp[i] < number)
 			is_small = 1;
-		push(stack, tmp[i]);
-		i--;
+		push(stack, tmp[i--]);
 	}
+	free(tmp);
 	if (is_small == 1)
 		return (1);
 	return (0);
@@ -47,11 +47,11 @@ int		check_top_stack(t_stack *stack)
 	int		b;
 	int		check;
 
+	check = 0;
 	if (stack->position >= 1)
 	{
 		a = pop(stack);
 		b = pop(stack);
-		check = 0;
 		if (a > b)
 			check = 1;
 		push(stack, b);
@@ -62,16 +62,16 @@ int		check_top_stack(t_stack *stack)
 	return (0);
 }
 
-void	set_instructions_more(t_stack *a, t_stack *b, t_list *instructions)
+void	set_instructions_more(t_stack *a, t_stack *b, t_list **instructions)
 {
 	if (check_top_stack(a) == 1)
 	{
-		ft_lstadd_back(&instructions, ft_lstnew(ft_strdup("sa")));
+		ft_lstadd_back(instructions, ft_lstnew(ft_strdup("sa")));
 		swap_stack(a);
 	}
 	else if (is_smallest_number(a, a->stack[a->position - 1]) == 0)
 	{
-		ft_lstadd_back(&instructions, ft_lstnew(ft_strdup("pb")));
+		ft_lstadd_back(instructions, ft_lstnew(ft_strdup("pb")));
 		push_stack_val(b, a);
 	}
 }
@@ -92,7 +92,7 @@ t_list	*set_instructions(t_stack *a, t_stack *b)
 		}
 		else if (check_top_stack(a) == 1 ||
 		is_smallest_number(a, a->stack[a->position - 1]) == 0)
-			set_instructions_more(a, b, instructions);
+			set_instructions_more(a, b, &instructions);
 		else
 		{
 			ft_lstadd_back(&instructions, ft_lstnew(ft_strdup("rra")));
@@ -100,4 +100,17 @@ t_list	*set_instructions(t_stack *a, t_stack *b)
 		}
 	}
 	return (instructions);
+}
+
+void	free_instructions(t_list *instructions)
+{
+	t_list *tmp;
+
+	while (instructions != NULL)
+	{
+		free(instructions->content);
+		tmp = instructions;
+		instructions = instructions->next;
+		free(tmp);
+	}
 }

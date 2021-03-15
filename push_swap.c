@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 15:22:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 14:21:17 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/15 15:33:46 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		main(int argc, char **argv)
 			while (b.position - 1 >= 0)
 				push(&a, pop(&b));
 			if (options.write == 1)
-				fd = open(options.write_file, O_CREAT | O_WRONLY, 0666);
+				fd = open(options.write_f, O_CREAT | O_TRUNC | O_WRONLY, 0666);
 			print_instructions(&a, &b, &options, fd);
 		}
 		free(a.stack);
