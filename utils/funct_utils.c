@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:21:21 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/14 18:11:27 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/14 18:16:57 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int		len_stack(char **tab, int i)
 	l = 0;
 	while (tab[i] != NULL)
 	{
-		if (ft_strcmp(tab[i], "-v") && ft_strcmp(tab[i], "-c") && ft_strcmp(tab[i], "-r") && ft_strcmp(tab[i], "-w"))
+		if (ft_strcmp(tab[i], "-v") && ft_strcmp(tab[i], "-c") &&
+		ft_strcmp(tab[i], "-r") && ft_strcmp(tab[i], "-w"))
 			break ;
 		i++;
 	}
@@ -35,7 +36,7 @@ char	**init_value(t_stack *a, t_stack *b, char **argv, int argc)
 {
 	char	**tmp;
 	int		len;
-	
+
 	tmp = NULL;
 	len = len_stack(argv, 1);
 	if (argc == 2)

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:05:59 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/14 18:13:41 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/14 18:17:22 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ int		check_options(t_option *options, char **tab, int i)
 
 int		fill_stack(t_stack *dest, char **tmp, char **argv, t_option *options)
 {
-	int  i;
-	
+	int		i;
+
 	if (tmp != NULL)
 	{
 		i = check_options(options, tmp, 0);

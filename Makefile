@@ -6,7 +6,7 @@
 #    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/05 14:53:41 by iounejja          #+#    #+#              #
-#    Updated: 2021/03/14 16:58:28 by iounejja         ###   ########.fr        #
+#    Updated: 2021/03/15 14:21:08 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,9 @@ UTILS_SRCS		= utils/ft_strcmp.c \
 					utils/push_utils.c \
 					utils/swap_utils.c \
 					utils/rotate_utils.c \
-					utils/funct_utils.c
+					utils/funct_utils.c \
+					utils/checker_utils.c \
+					utils/push_swap_utils.c
 CHECKER_OBJ		= $(CHECKER_SRCS:.c=.o)
 PUSH_SWAP_OBJ	= $(PUSH_SWAP_SRCS:.c=.o)
 UTILS_OBJ		= $(UTILS_SRCS:.c=.o)

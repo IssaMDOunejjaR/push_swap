@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 15:31:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/14 11:12:22 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/15 14:23:28 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,22 @@ int				check_double_val(char **tab);
 int				is_sorted(t_stack *stack);
 char			**init_value(t_stack *a, t_stack *b, char **argv, int argc);
 void			init_option(t_option *options);
+int				check_instruction(char *instruction, t_stack *a, t_stack *b);
+int				execute_instructions(t_stack *a, t_stack *b,
+				char **instructions, t_option *options);
+t_list			*set_instructions(t_stack *a, t_stack *b);
+int				get_instructions(t_stack *a, t_stack *b, t_option *options);
 void			print_stack(t_stack *stack, int fd);
+void			print_start_status(t_stack *a, t_stack *b, int fd);
+void			print_instructions(t_stack *a, t_stack *b,
+				t_option *options, int fd);
+void			free_instructions(t_list *instructions);
 void			push(t_stack *dest, int value);
 int				pop(t_stack *stack);
-int				fill_stack(t_stack *dest, char **tmp, char **argv, t_option *options);
-void			display_status(t_stack *a, t_stack *b, char *instruction, int fd);
+int				fill_stack(t_stack *dest, char **tmp,
+				char **argv, t_option *options);
+void			display_status(t_stack *a, t_stack *b,
+				char *instruction, int fd);
 int				check_options(t_option *options, char **tab, int i);
 void			push_stack_val(t_stack *dest, t_stack *src);
 void			swap_stack(t_stack *stack);
