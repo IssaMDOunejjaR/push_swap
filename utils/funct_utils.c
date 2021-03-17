@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:21:21 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 18:15:21 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/17 15:21:38 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,25 +30,6 @@ int		len_stack(char **tab, int i)
 		l++;
 	}
 	return (l);
-}
-
-char	**init_value(t_stack *a, t_stack *b, char **argv, int argc)
-{
-	char	**tmp;
-	int		len;
-
-	tmp = NULL;
-	len = len_stack(argv, 1);
-	if (argc == 2)
-	{
-		tmp = ft_split(argv[1], ' ');
-		len = len_stack(tmp, 0);
-	}
-	a->stack = malloc(sizeof(int) * len);
-	b->stack = malloc(sizeof(int) * len);
-	a->position = 0;
-	b->position = 0;
-	return (tmp);
 }
 
 int		check_double_val(char **tab)
@@ -100,29 +81,52 @@ int		is_sorted(t_stack *stack)
 	return (0);
 }
 
-void	print_stack(t_stack *stack, int fd)
+int		is_smallest_number(t_stack *stack, int number)
 {
+	int		*tmp;
 	int		i;
 	int		len;
-	int		*tmp;
+	int		is_small;
 
-	if (stack->position == 0)
-		ft_putendl_fd("Empty", fd);
-	else
+	i = 0;
+	len = stack->position;
+	tmp = malloc(sizeof(int) * len);
+	while (stack->position != 0)
 	{
-		len = stack->position;
-		tmp = malloc(sizeof(int) * len);
-		i = 0;
-		while (stack->position != 0)
-		{
-			tmp[i] = pop(stack);
-			ft_putnbr_fd(tmp[i], fd);
-			ft_putchar_fd('\n', fd);
-			i++;
-		}
-		i = len - 1;
-		while (i >= 0)
-			push(stack, tmp[i--]);
-		free(tmp);
+		tmp[i] = pop(stack);
+		i++;
 	}
+	i = len - 1;
+	is_small = 0;
+	while (i >= 0)
+	{
+		if (tmp[i] < number)
+			is_small = 1;
+		push(stack, tmp[i--]);
+	}
+	free(tmp);
+	if (is_small == 1)
+		return (1);
+	return (0);
+}
+
+int		check_top_stack(t_stack *stack)
+{
+	int		a;
+	int		b;
+	int		check;
+
+	check = 0;
+	if (stack->position >= 1)
+	{
+		a = pop(stack);
+		b = pop(stack);
+		if (a > b)
+			check = 1;
+		push(stack, b);
+		push(stack, a);
+	}
+	if (check == 1)
+		return (1);
+	return (0);
 }

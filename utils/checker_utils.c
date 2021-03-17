@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 18:18:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 18:17:49 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/17 15:13:52 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,18 +39,6 @@ int		check_instruction(char *instruction, t_stack *a, t_stack *b)
 	else
 		return (1);
 	return (0);
-}
-
-int		display_checker_status(t_stack *a, t_stack *b, t_option *opt)
-{
-	int		fd;
-
-	fd = 1;
-	if (opt->write == 1)
-		fd = open(opt->write_f, O_CREAT | O_TRUNC | O_WRONLY, 0666);
-	if (opt->display_status == 1)
-		print_start_status(a, b, fd);
-	return (fd);
 }
 
 int		execute_instructions(t_stack *a, t_stack *b, char **in, t_option *opt)
@@ -106,33 +94,4 @@ int		get_instructions(t_stack *a, t_stack *b, t_option *options)
 		return (1);
 	free_table(instructions);
 	return (0);
-}
-
-void	print_instructions(t_stack *a, t_stack *b, t_option *options, int fd)
-{
-	t_list *instructions;
-	t_list *tmp;
-
-	if (options->display_status == 1)
-		print_start_status(a, b, fd);
-	instructions = set_instructions(a, b);
-	tmp = instructions;
-	while (tmp->next != NULL)
-	{
-		ft_putendl_fd(tmp->content, fd);
-		if (options->display_status == 1)
-		{
-			display_status(a, b, NULL, fd);
-			ft_putstr_fd("\n\n", fd);
-		}
-		tmp = tmp->next;
-	}
-	if (options->color == 1 && options->write == 0)
-		ft_putstr_fd("\e[1;32m", fd);
-	ft_putendl_fd(tmp->content, fd);
-	if (options->display_status == 1)
-		display_status(a, b, NULL, fd);
-	if (options->color == 1 && options->write == 0)
-		ft_putstr_fd("\033[0;37m", fd);
-	free_instructions(instructions);
 }

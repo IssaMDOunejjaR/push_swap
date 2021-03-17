@@ -6,100 +6,57 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 14:20:45 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 17:10:27 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/17 15:26:41 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
 
-int		is_smallest_number(t_stack *stack, int number)
+char	*sort_stack(t_stack *a, t_stack *b)
 {
-	int		*tmp;
-	int		i;
-	int		len;
-	int		is_small;
+	char	*str;
 
-	i = 0;
-	len = stack->position;
-	tmp = malloc(sizeof(int) * len);
-	while (stack->position != 0)
+	str = NULL;
+	if (is_sorted(a) == 0 && b->position != 0)
 	{
-		tmp[i] = pop(stack);
-		i++;
+		push_stack_val(a, b);
+		str = "pa";
 	}
-	i = len - 1;
-	is_small = 0;
-	while (i >= 0)
+	else if (check_top_stack(a) == 1)
 	{
-		if (tmp[i] < number)
-			is_small = 1;
-		push(stack, tmp[i--]);
-	}
-	free(tmp);
-	if (is_small == 1)
-		return (1);
-	return (0);
-}
-
-int		check_top_stack(t_stack *stack)
-{
-	int		a;
-	int		b;
-	int		check;
-
-	check = 0;
-	if (stack->position >= 1)
-	{
-		a = pop(stack);
-		b = pop(stack);
-		if (a > b)
-			check = 1;
-		push(stack, b);
-		push(stack, a);
-	}
-	if (check == 1)
-		return (1);
-	return (0);
-}
-
-void	set_instructions_more(t_stack *a, t_stack *b, t_list **instructions)
-{
-	if (check_top_stack(a) == 1)
-	{
-		ft_lstadd_back(instructions, ft_lstnew(ft_strdup("sa")));
 		swap_stack(a);
+		str = "sa";
 	}
 	else if (is_smallest_number(a, a->stack[a->position - 1]) == 0)
 	{
-		ft_lstadd_back(instructions, ft_lstnew(ft_strdup("pb")));
 		push_stack_val(b, a);
+		str = "pb";
 	}
+	else
+	{
+		reverse_rotate_stack(a);
+		str = "rra";
+	}
+	return (str);
 }
 
-t_list	*set_instructions(t_stack *a, t_stack *b)
+void	print_instructions(t_stack *a, t_stack *b, t_option *options, int fd)
 {
-	t_list	*instructions;
+	char	*str;
 
-	instructions = NULL;
+	if (options->display_status == 1)
+		print_start_status(a, b, fd);
 	while (1)
 	{
+		str = NULL;
 		if (is_sorted(a) == 0 && b->position == 0)
 			break ;
-		else if (is_sorted(a) == 0 && b->position != 0)
-		{
-			ft_lstadd_back(&instructions, ft_lstnew(ft_strdup("pa")));
-			push_stack_val(a, b);
-		}
-		else if (check_top_stack(a) == 1 ||
-		is_smallest_number(a, a->stack[a->position - 1]) == 0)
-			set_instructions_more(a, b, &instructions);
 		else
-		{
-			ft_lstadd_back(&instructions, ft_lstnew(ft_strdup("rra")));
-			reverse_rotate_stack(a);
-		}
+			str = sort_stack(a, b);
+		ft_putendl_fd(str, fd);
+		if (options->display_status == 1 && str != NULL)
+			display_status(a, b, str, fd);
 	}
-	return (instructions);
 }
 
 void	free_instructions(t_list *instructions)

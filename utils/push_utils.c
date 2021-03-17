@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:10:59 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 18:17:43 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/17 15:12:23 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	push_stack_val(t_stack *dest, t_stack *src)
 {
-	if (src->position != -1)
+	if (src->position != 0)
 	{
 		dest->stack[dest->position] = pop(src);
 		dest->position++;
@@ -38,27 +38,4 @@ int		pop(t_stack *stack)
 		stack->position--;
 	}
 	return (value);
-}
-
-void	init_option(t_option *options)
-{
-	options->display_status = 0;
-	options->color = 0;
-	options->read = 0;
-	options->write = 0;
-}
-
-void	display_status(t_stack *a, t_stack *b, char *instruction, int fd)
-{
-	if (instruction != NULL)
-	{
-		ft_putstr_fd("====== ", fd);
-		ft_putstr_fd(instruction, fd);
-		ft_putendl_fd(" ======", fd);
-	}
-	ft_putendl_fd("#----- a -----#", fd);
-	print_stack(a, fd);
-	ft_putendl_fd("#----- b -----#", fd);
-	print_stack(b, fd);
-	ft_putendl_fd("#-------------#", fd);
 }
