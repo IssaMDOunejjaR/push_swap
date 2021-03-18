@@ -6,11 +6,25 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 15:22:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 15:33:46 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/18 12:28:04 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+
+int		check_files(t_option *options)
+{
+	int		fd;
+
+	if (options->write == 1)
+		fd = open(options->write_f, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+	if (options->read == 1)
+	{
+		if (open(options->read_file, O_RDONLY, 0666) < 0)
+			return (-1);
+	}
+	return (fd);
+}
 
 int		main(int argc, char **argv)
 {
@@ -31,8 +45,8 @@ int		main(int argc, char **argv)
 			fd = 1;
 			while (b.position - 1 >= 0)
 				push(&a, pop(&b));
-			if (options.write == 1)
-				fd = open(options.write_f, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+			if ((fd = check_files(&options)) < 0)
+				ft_putendl_fd("Error", 2);
 			print_instructions(&a, &b, &options, fd);
 		}
 		free(a.stack);

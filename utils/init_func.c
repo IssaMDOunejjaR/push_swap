@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:11:05 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/18 10:55:33 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/18 12:15:03 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	init_option(t_option *options)
 	options->color = 0;
 	options->read = 0;
 	options->write = 0;
+	options->read_file = NULL;
+	options->write_f = NULL;
 }
 
 long	ft_atoi_long(char *str)

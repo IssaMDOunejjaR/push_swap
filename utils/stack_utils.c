@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:05:59 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/15 18:17:43 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/18 12:14:10 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,11 @@ int		valid_option(t_option *options)
 		return (1);
 	if (options->read > 1)
 		return (1);
+	if (options->read == 1 && options->read_file == NULL)
+		return (1);
 	if (options->write > 1)
+		return (1);
+	if (options->write == 1 && options->write_f == NULL)
 		return (1);
 	return (0);
 }
