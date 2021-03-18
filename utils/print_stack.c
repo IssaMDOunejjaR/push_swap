@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:12:11 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/17 15:19:55 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/18 11:08:05 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,12 @@ int		display_checker_status(t_stack *a, t_stack *b, t_option *opt)
 	int		fd;
 
 	fd = 1;
-	if (opt->write == 1)
-		fd = open(opt->write_f, O_CREAT | O_TRUNC | O_WRONLY, 0666);
 	if (opt->display_status == 1)
-		print_start_status(a, b, fd);
+	{
+		if (opt->write == 1)
+			fd = open(opt->write_f, O_CREAT | O_TRUNC | O_WRONLY, 0666);
+		if (opt->display_status == 1)
+			print_start_status(a, b, fd);
+	}
 	return (fd);
 }

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 18:18:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/17 15:13:52 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/18 11:10:49 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,10 @@ int		execute_instructions(t_stack *a, t_stack *b, char **in, t_option *opt)
 		}
 		if (opt->display_status == 1)
 		{
-			if (opt->color == 1 && in[i + 1] == NULL && opt->color == 0)
+			if (opt->color == 1 && in[i + 1] == NULL && opt->write != 1)
 				ft_putstr_fd("\e[1;32m", fd);
 			display_status(a, b, in[i], fd);
-			if (opt->color == 1 && in[i + 1] == NULL && opt->color == 0)
+			if (opt->color == 1 && in[i + 1] == NULL && opt->write != 1)
 				ft_putstr_fd("\033[0;37m", fd);
 			if (in[i + 1] != NULL)
 				ft_putstr_fd("\n\n", fd);

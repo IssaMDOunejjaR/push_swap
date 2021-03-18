@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:21:21 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/17 15:21:38 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/18 10:59:22 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,10 @@ int		check_double_val(char **tab)
 	while (tab[i] != NULL)
 	{
 		j = i + 1;
+		if (is_all_num(tab[i]) == 0 &&
+		(ft_atoi_long(tab[i]) > ft_atoi("2147483647")
+		|| ft_atoi_long(tab[i]) < ft_atoi("-2147483648")))
+			return (1);
 		while (tab[j] != NULL)
 		{
 			if (ft_strcmp(tab[i], tab[j]) == 0)

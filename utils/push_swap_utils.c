@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/15 14:20:45 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/17 15:26:41 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/17 17:08:27 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,18 @@ void	print_instructions(t_stack *a, t_stack *b, t_option *options, int fd)
 			break ;
 		else
 			str = sort_stack(a, b);
+		if (is_sorted(a) == 0 && b->position == 0 && options->color == 1
+		&& options->write != 1)
+			ft_putstr_fd("\e[1;32m", fd);
 		ft_putendl_fd(str, fd);
 		if (options->display_status == 1 && str != NULL)
 			display_status(a, b, str, fd);
+		if (is_sorted(a) == 0 && b->position == 0 && options->color == 1
+		&& options->write != 1)
+			ft_putstr_fd("\033[0;37m", fd);
+		else if (!(is_sorted(a) == 0 && b->position == 0)
+		&& options->display_status == 1)
+			ft_putstr_fd("\n\n", fd);
 	}
 }
 

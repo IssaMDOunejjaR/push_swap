@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 15:31:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/17 15:25:15 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/18 11:17:22 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,11 @@ typedef struct	s_stack
 }				t_stack;
 
 int				ft_strcmp(char *s1, char *s2);
+long			ft_atoi_long(char *str);
 int				len_table(char **tab);
 char			**tab_join(char **tab, char *line);
 void			free_table(char **tab);
+int				is_all_num(char *str);
 int				get_next_line(int fd, char **line);
 int				check_double_val(char **tab);
 int				len_stack(char **tab, int i);
@@ -66,7 +68,6 @@ void			display_status(t_stack *a, t_stack *b,
 				char *instruction, int fd);
 int				display_checker_status(t_stack *a, t_stack *b, t_option *opt);
 int				check_options(t_option *options, char **tab, int i);
-
 void			push_stack_val(t_stack *dest, t_stack *src);
 void			swap_stack(t_stack *stack);
 void			swap_both(t_stack *a, t_stack *b);

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:11:05 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/17 15:11:55 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/18 10:55:33 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,29 @@ void	init_option(t_option *options)
 	options->color = 0;
 	options->read = 0;
 	options->write = 0;
+}
+
+long	ft_atoi_long(char *str)
+{
+	long	nb;
+	long	n;
+	int		i;
+
+	i = 0;
+	n = 1;
+	nb = 0;
+	while (str[i] == ' ' || str[i] == '\t' || str[i] == '\n' ||
+			str[i] == '\v' || str[i] == '\f' || str[i] == '\r')
+		i++;
+	if (str[i] == '-')
+		n = -1;
+	if (str[i] == '+' || str[i] == '-')
+		i++;
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		nb = (nb * 10) + (str[i] - 48);
+		i++;
+	}
+	nb = nb * n;
+	return (nb);
 }
