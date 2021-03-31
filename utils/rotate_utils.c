@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:35:05 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/13 16:50:04 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/20 15:23:37 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	rotate_stack(t_stack *stack)
 	int		i;
 	int		len;
 
+	if (stack->position < 2)
+		return ;
 	i = 0;
 	len = stack->position;
 	tmp = malloc(sizeof(int) * len);
@@ -48,6 +50,8 @@ void	reverse_rotate_stack(t_stack *stack)
 	int		i;
 	int		len;
 
+	if (stack->position < 2)
+		return ;
 	i = 0;
 	len = stack->position;
 	tmp = malloc(sizeof(int) * len);

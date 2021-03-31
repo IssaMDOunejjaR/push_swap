@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 15:12:11 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/18 11:08:05 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/27 14:55:49 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	print_stack(t_stack *stack, int fd)
 			ft_putchar_fd('\n', fd);
 			i++;
 		}
-		i = len - 1;
+		i = i - 1;
 		while (i >= 0)
 			push(stack, tmp[i--]);
 		free(tmp);

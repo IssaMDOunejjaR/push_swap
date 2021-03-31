@@ -6,7 +6,7 @@
 #    By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/05 14:53:41 by iounejja          #+#    #+#              #
-#    Updated: 2021/03/17 15:14:43 by iounejja         ###   ########.fr        #
+#    Updated: 2021/03/27 15:45:35 by iounejja         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,7 @@ EXEC_CHECKER	= checker
 EXEC_PUSH_SWAP	= push_swap
 LIB_CHECKER		= checker.a
 LIB_PUSH_SWAP	= push_swap.a
-CHECKER_SRCS	= checker.c \
-					utils/checker_utils.c
+CHECKER_SRCS	= checker.c
 PUSH_SWAP_SRCS	= push_swap.c \
 					utils/push_swap_utils.c
 UTILS_SRCS		= utils/ft_strcmp.c \
@@ -29,7 +28,10 @@ UTILS_SRCS		= utils/ft_strcmp.c \
 					utils/rotate_utils.c \
 					utils/funct_utils.c \
 					utils/init_func.c \
-					utils/print_stack.c
+					utils/print_stack.c \
+					utils/sort_big_stack.c \
+					utils/sort_small_stack.c \
+					utils/checker_utils.c
 CHECKER_OBJ		= $(CHECKER_SRCS:.c=.o)
 PUSH_SWAP_OBJ	= $(PUSH_SWAP_SRCS:.c=.o)
 UTILS_OBJ		= $(UTILS_SRCS:.c=.o)

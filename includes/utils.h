@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 15:31:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/18 11:17:22 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/27 15:48:56 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,20 @@
 # include "libft.h"
 
 # define BUFFER_SIZE 1
+
+typedef	struct	s_utils
+{
+	int			number;
+	int			pushed;
+	int			check;
+	int			start;
+	int			end;
+	int			chunk;
+	int			chunk_len;
+	int			len;
+	char		**inst;
+	int			fd;
+}				t_utils;
 
 typedef struct	s_option
 {
@@ -75,5 +89,11 @@ void			rotate_stack(t_stack *stack);
 void			rotate_both(t_stack *a, t_stack *b);
 void			reverse_rotate_stack(t_stack *stack);
 void			reverse_rotate_both(t_stack *a, t_stack *b);
+void			sort_big_stack(t_stack *a, t_stack *b,
+				t_utils *utils, int chunk_len);
+int				count_instructions(t_stack *stack);
+int				*bubble_sort(int *tab, int len);
+void			sort_small_stack(t_stack *a, t_stack *b, t_utils *utils);
+int				*copy_stack(t_stack *stack);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 15:21:40 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/14 18:30:36 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/29 13:25:39 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	check_if_sorted(t_stack *a, t_stack *b)
 {
+	if (a->position == 0)
+		return ;
 	if (is_sorted(a) == 0 && b->position == 0)
 		ft_putendl_fd("OK", 1);
 	else

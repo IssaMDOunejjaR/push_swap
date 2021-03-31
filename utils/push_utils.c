@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:10:59 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/17 15:12:23 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/20 15:37:00 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		pop(t_stack *stack)
 	int		value;
 
 	value = 0;
-	if (stack->position > 0)
+	if (stack->position != 0)
 	{
 		value = stack->stack[stack->position - 1];
 		stack->position--;

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/10 11:21:21 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/18 10:59:22 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/27 15:48:47 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int		check_top_stack(t_stack *stack)
 	int		check;
 
 	check = 0;
-	if (stack->position >= 1)
+	if (stack->position > 1)
 	{
 		a = pop(stack);
 		b = pop(stack);

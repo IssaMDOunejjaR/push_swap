@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/05 15:22:16 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/18 12:28:04 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/26 19:06:26 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int		check_files(t_option *options)
 {
 	int		fd;
 
+	fd = 1;
 	if (options->write == 1)
 		fd = open(options->write_f, O_CREAT | O_TRUNC | O_WRONLY, 0666);
 	if (options->read == 1)

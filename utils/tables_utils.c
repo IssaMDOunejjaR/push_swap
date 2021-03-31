@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/06 15:30:29 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/09 11:20:27 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/27 15:37:58 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,25 @@ void	free_table(char **tab)
 		i++;
 	}
 	free(tab);
+}
+
+int		*copy_stack(t_stack *stack)
+{
+	int		*tab;
+	int		i;
+
+	i = 0;
+	tab = malloc(sizeof(int) * stack->position);
+	while (stack->position)
+	{
+		tab[i] = pop(stack);
+		i++;
+	}
+	i = i - 1;
+	while (i >= 0)
+	{
+		push(stack, tab[i]);
+		i--;
+	}
+	return (tab);
 }

@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/14 18:18:06 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/18 11:10:49 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/29 14:16:03 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,28 +70,54 @@ int		execute_instructions(t_stack *a, t_stack *b, char **in, t_option *opt)
 	return (0);
 }
 
-int		get_instructions(t_stack *a, t_stack *b, t_option *options)
+int		files_checker(t_option *options)
 {
-	char	**instructions;
-	char	*line;
-	int		fd;
+	int fd;
 
-	instructions = malloc(sizeof(char *) * 1);
-	instructions[0] = NULL;
 	fd = 0;
 	if (options->read == 1)
 	{
+		if (options->read_file == NULL)
+			return (-1);
 		if ((fd = open(options->read_file, O_RDONLY, 0666)) < 0)
-			return (1);
+			return (-1);
 	}
+	if (options->write == 1)
+	{
+		if (options->write_f == NULL)
+		{
+			return (-1);
+		}
+		if (open(options->write_f, O_CREAT | O_TRUNC | O_WRONLY, 0666) < 0)
+			return (-1);
+	}
+	return (fd);
+}
+
+int		get_instructions(t_stack *a, t_stack *b, t_option *options)
+{
+	char	*line;
+	int		fd;
+
+	if ((fd = files_checker(options)) == -1)
+		return (1);
+	if (a->position == 0)
+		return (0);
 	while (get_next_line(fd, &line))
 	{
-		instructions = tab_join(instructions, line);
+		if (check_instruction(line, a, b) == 1)
+			return (1);
+		if (options->display_status == 1)
+		{
+			if (options->color == 1 && options->write != 1)
+				ft_putstr_fd("\e[1;32m", fd);
+			display_status(a, b, line, fd);
+			if (options->color == 1 && options->write != 1)
+				ft_putstr_fd("\033[0;37m", fd);
+			ft_putstr_fd("\n\n", fd);
+		}
 		free(line);
 	}
 	free(line);
-	if (execute_instructions(a, b, instructions, options) == 1)
-		return (1);
-	free_table(instructions);
 	return (0);
 }

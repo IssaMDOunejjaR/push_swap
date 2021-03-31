@@ -6,7 +6,7 @@
 /*   By: iounejja <iounejja@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/07 15:05:59 by iounejja          #+#    #+#             */
-/*   Updated: 2021/03/18 12:14:10 by iounejja         ###   ########.fr       */
+/*   Updated: 2021/03/29 13:36:18 by iounejja         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,14 @@ int		is_all_num(char *str)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (i == 0 && str[0] == '-')
+		if (i == 0 && (str[0] == '-' || str[0] == '+'))
 			;
 		else if (!(str[i] >= '0' && str[i] <= '9'))
 			return (1);
 		i++;
 	}
+	if (ft_strcmp(str, "-") == 0 || ft_strcmp(str, "+") == 0)
+		return (1);
 	return (0);
 }
 
@@ -79,7 +81,8 @@ int		check_options(t_option *options, char **tab, int i)
 		}
 		else
 			break ;
-		i++;
+		if (tab[i] != NULL)
+			i++;
 	}
 	return (i);
 }
